@@ -15,6 +15,7 @@ def dataset_augmentation(data_origen_path,data_transformation_path):
     for folder in os.listdir(data_origen_path):
         os.mkdir(rechannel_path +"/" + folder)
         os.mkdir(augment_path +"/" + folder)
+        print(f"creating the augmetation files for the class: {folder}\n")
 
         for file in os.listdir(data_origen_path + "/" + folder):
 
@@ -25,6 +26,9 @@ def dataset_augmentation(data_origen_path,data_transformation_path):
             audio_time_shift = time_shift(audio_rechannel, sr, 3333)
             audio_pitch_shift = pitch_shift(audio_time_shift[0].numpy(), sr)
             save_audio(path= augment_path + "/" + folder + "/" + file, aud=torch.from_numpy(audio_pitch_shift),  sr=sr)
+
+    print("data augmentation complete\n")
+
 
 def dataset_features(path, augment = "yes"):
 
@@ -39,6 +43,8 @@ def dataset_features(path, augment = "yes"):
     if augment == "yes":
         rechannel_path = path +"/rechannel"
         data_augmented_path = path + "/data_augmented"
+
+        print("creating features for all the classes\n")
 
         for dir in os.listdir(rechannel_path ):
             path_new_dir = path_spec_original + "/" + dir;
@@ -60,6 +66,8 @@ def dataset_features(path, augment = "yes"):
             create_pngs_from_wavs(rechannel_path + "/" + dir,path_new_dir)
     
     else: print("expext a 'yes' or 'no' enswer")
+
+    print("features created!!!\n")
 
 
 

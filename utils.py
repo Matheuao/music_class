@@ -6,6 +6,8 @@ import librosa
 import librosa.display
 import soundfile as sf
 import matplotlib.pyplot as plt
+
+from keras.preprocessing import image
 import os
 
 # AUDIO FILE MANIPULATION
@@ -144,12 +146,12 @@ def augmented_spec_loop(path_in, path_out):
             fig.savefig(path_out + "/" + folder + "/" + png)
             plt.close(fig)
 
-def load_images_from_path(path, label):
+def load_images_from_path(path, label, resolution = [480,640]):
     images = []
     labels = []
 
     for file in os.listdir(path):
-        images.append(image.img_to_array(image.load_img(os.path.join(path, file), target_size=(int(480/1.5), int(640/1.5), 3))))
+        images.append(image.img_to_array(image.load_img(os.path.join(path, file), target_size=(int(resolution[0]), int(resolution[1]), 3))))
         labels.append((label))
         
     return images, labels
