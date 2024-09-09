@@ -84,6 +84,6 @@ def dataset_creation(origen_path,transform_path, augment = "yes"):
     else :print("expext a 'yes' or 'no' enswer")
 
 
-dataset_creation("dataset/BallroomData","dataset")
+
 
 
