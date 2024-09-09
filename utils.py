@@ -10,16 +10,42 @@ import matplotlib.pyplot as plt
 from keras.preprocessing import image
 import os
 
+def check_and_create_directory(directory_path):
+
+    if not os.path.exists(directory_path):
+        os.makedirs(directory_path)
+        
+    else:
+        print(f'Diretório {directory_path} já existe.')
+
+
 # AUDIO FILE MANIPULATION
 def load_audio(file):
-    audio_tensor, sr = torchaudio.load(file)
+    import torch
+import torchaudio
+
+def load_audio_file(file_path):
     
-    return audio_tensor, sr
+    try:
+        # Tenta carregar o arquivo de áudio
+        waveform, sample_rate = torchaudio.load(file_path)
+        #print(f'Arquivo {file_path} carregado com sucesso.')
+        return waveform, sample_rate
+    except Exception as e:
+        # Captura qualquer exceção que ocorra e imprime uma mensagem de erro
+        print(f'Não foi possível carregar o arquivo {file_path}.\n Erro: {e}\n')
+        return None, None
+
+    #audio_tensor, sr = torchaudio.load(file)
+    
+    #return audio_tensor, sr
 
 def save_audio(aud, path, sr):
-    #sf.write(path, aud, samplerate=sr, 'PCM_24')
-
-    torchaudio.save(path, aud, sample_rate=sr)
+    
+    try:
+        torchaudio.save(path, aud, sample_rate=sr)
+    except Exception as e: 
+        print(f"Was not possible save the file:{path}.\n Erro:{e}\n")
     
 def rechannel(aud):
     
